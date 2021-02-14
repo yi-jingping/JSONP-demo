@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>JSONP演示</title>
+</head>
+<body>
+  <h5>你的余额是<span id="amount">&amount&</span></h5>  
+  <button id="button">付款1块钱</button>
+  <script >
+      button.addEventListener('click',(e) => {
+          //这里是纯手写代码
+        // let script = document.createElement('script')
+        // let functionName = 'jp' + parseInt(Math.random() * 10000,10)
+        // script.src = '/pay?callback=' + functionName
+        // window[functionName] = function(response){
+        //     console.log('收到数据为：' + response)
+        //     amount.innerText = amount.innerText - 1
+        //     delete window[functionName]
+        // }
+        // document.body.appendChild(script)
+        // script.onload = function(e){
+        //     e.currentTarget.remove()
+        // }
+
+
+        //下面是用jQuery实现的代码
+        $.ajax({
+            url: "http://poliyun.com:8081/pay",
+            jsonp: "callback",
+            dataType: "jsonp",
+            success: function (response) {
+                amount.innerText = amount.innerText - 1
+            }
+        });
+      })
+  </script>
+</body>
+</html>
